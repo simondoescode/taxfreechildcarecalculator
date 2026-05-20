@@ -1,0 +1,180 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    
+    <!-- SEO Meta Tags -->
+    <title>UK Tax-Free Childcare Calculator | Estimate Your Government Top-Up</title>
+    <meta name="description" content="Use our free UK Tax-Free Childcare calculator to work out exactly how much you need to pay into your account, and how much the government will contribute.">
+    <meta name="keywords" content="tax-free childcare calculator, UK childcare gov top-up, childcare costs, government contribution calculator, HMRC childcare">
+    <meta name="robots" content="index, follow">
+    <link rel="canonical" href="https://yourwebsite.com/calculator" />
+
+    <!-- Open Graph / Social Sharing -->
+    <meta property="og:type" content="website">
+    <meta property="og:title" content="UK Tax-Free Childcare Calculator">
+    <meta property="og:description" content="Calculate your government childcare top-up instantly. Find out how much to pay into your childcare account.">
+    
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    
+    <style>
+        body { font-family: 'Inter', sans-serif; }
+        /* Hide number input arrows for a cleaner look */
+        input[type="number"]::-webkit-inner-spin-button, 
+        input[type="number"]::-webkit-outer-spin-button { -webkit-appearance: none; margin: 0; }
+        input[type="number"] { -moz-appearance: textfield; }
+    </style>
+
+    <!-- Schema.org Structured Data for SEO -->
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "WebApplication",
+      "name": "Tax-Free Childcare Calculator",
+      "description": "A tool to calculate the UK government's 20% top-up for childcare costs.",
+      "applicationCategory": "CalculatorApplication",
+      "operatingSystem": "All",
+      "offers": {
+        "@type": "Offer",
+        "price": "0",
+        "priceCurrency": "GBP"
+      }
+    }
+    </script>
+</head>
+<body class="bg-gradient-to-br from-slate-50 to-slate-200 min-h-screen flex items-center justify-center p-4 sm:p-8 antialiased text-slate-800">
+
+    <main class="bg-white rounded-[2rem] shadow-[0_20px_50px_-12px_rgba(0,0,0,0.1)] max-w-lg w-full p-6 sm:p-10 border border-slate-100 transition-all">
+        
+        <header class="mb-8">
+            <h1 class="text-3xl font-extrabold tracking-tight text-slate-900 mb-3">
+                Tax-Free Childcare Calculator
+            </h1>
+            <p class="text-slate-500 leading-relaxed text-sm">
+                Calculate exactly how much you need to deposit to get the maximum UK government contribution toward your childcare costs.
+            </p>
+        </header>
+
+        <!-- Input Form -->
+        <form class="space-y-6" onsubmit="event.preventDefault();">
+            
+            <!-- Total amount payable -->
+            <div class="group">
+                <label for="total" class="block text-sm font-semibold text-slate-700 mb-2">
+                    Total bill from Childcare Provider
+                </label>
+                <div class="relative transition-shadow duration-300 rounded-xl group-focus-within:ring-4 group-focus-within:ring-indigo-100">
+                    <div class="absolute inset-y-0 left-0 pl-4 flex items-center pointer-events-none">
+                        <span class="text-slate-400 font-semibold text-lg">£</span>
+                    </div>
+                    <input type="number" id="total" min="0" step="0.01" placeholder="0.00" 
+                           class="pl-10 w-full bg-slate-50 border border-slate-200 text-slate-900 font-medium rounded-xl py-3 px-4 focus:outline-none focus:border-indigo-500 focus:bg-white transition-all text-lg"
+                           aria-label="Total amount payable to Childcare Provider">
+                </div>
+            </div>
+
+            <!-- Amount already contributed -->
+            <div class="group">
+                <label for="contributed" class="block text-sm font-semibold text-slate-700 mb-2">
+                    Gov contribution used this period <span class="font-normal text-slate-400">(Current 3 months)</span>
+                </label>
+                <div class="relative transition-shadow duration-300 rounded-xl group-focus-within:ring-4 group-focus-within:ring-indigo-100">
+                    <div class="absolute inset-y-0 left-0 pl-4 flex items-center pointer-events-none">
+                        <span class="text-slate-400 font-semibold text-lg">£</span>
+                    </div>
+                    <input type="number" id="contributed" min="0" step="0.01" placeholder="0.00" 
+                           class="pl-10 w-full bg-slate-50 border border-slate-200 text-slate-900 font-medium rounded-xl py-3 px-4 focus:outline-none focus:border-indigo-500 focus:bg-white transition-all text-lg"
+                           aria-label="Amount already contributed by the Government">
+                </div>
+            </div>
+
+            <!-- Disabled Child Toggle -->
+            <div class="flex items-start p-4 bg-slate-50 rounded-xl border border-slate-100 hover:bg-slate-100 transition-colors cursor-pointer" onclick="document.getElementById('disabled').click()">
+                <div class="flex items-center h-5 mt-0.5">
+                    <input id="disabled" type="checkbox" class="h-5 w-5 text-indigo-600 focus:ring-indigo-500 border-slate-300 rounded cursor-pointer accent-indigo-600">
+                </div>
+                <div class="ml-3 text-sm flex-1">
+                    <label for="disabled" class="font-semibold text-slate-800 cursor-pointer pointer-events-none">Child is disabled</label>
+                    <p class="text-slate-500 mt-1 pointer-events-none">Increases max government top-up from £500 to £1,000 per 3-month period.</p>
+                </div>
+            </div>
+        </form>
+
+        <!-- Output Results (Premium High-Contrast Card) -->
+        <section aria-live="polite" class="mt-8 bg-gradient-to-br from-indigo-900 to-slate-800 rounded-2xl p-6 sm:p-8 shadow-inner border border-indigo-700 text-white relative overflow-hidden">
+            
+            <!-- Decorative background element -->
+            <div class="absolute top-0 right-0 -mr-16 -mt-16 w-48 h-48 rounded-full bg-indigo-500 opacity-20 blur-3xl"></div>
+
+            <div class="relative z-10">
+                <div class="mb-6">
+                    <h2 class="text-xs font-bold text-indigo-300 uppercase tracking-widest mb-1">You need to pay</h2>
+                    <output id="userPays" class="block text-4xl sm:text-5xl font-extrabold tracking-tight">£0.00</output>
+                </div>
+                
+                <div class="pt-5 border-t border-indigo-700/50">
+                    <h2 class="text-xs font-bold text-indigo-300 uppercase tracking-widest mb-1">Government will add</h2>
+                    <output id="govPays" class="block text-2xl sm:text-3xl font-bold text-indigo-100">£0.00</output>
+                </div>
+            </div>
+        </section>
+
+    </main>
+
+    <!-- Core Logic Script -->
+    <script>
+        const totalInput = document.getElementById('total');
+        const contributedInput = document.getElementById('contributed');
+        const disabledToggle = document.getElementById('disabled');
+
+        function calculate() {
+            // Retrieve and parse inputs
+            const total = Math.max(0, parseFloat(totalInput.value) || 0);
+            const alreadyContributed = Math.max(0, parseFloat(contributedInput.value) || 0);
+            const isDisabled = disabledToggle.checked;
+            
+            // Maximum government contribution (£500 standard, £1000 if disabled)
+            const maxGovAllowance = isDisabled ? 1000 : 500;
+            const remainingGovAllowance = Math.max(0, maxGovAllowance - alreadyContributed);
+            
+            // Government covers 20% of the total childcare bill
+            let govContribution = total * 0.20;
+            
+            // Cap the contribution to the remaining allowance
+            if (govContribution > remainingGovAllowance) {
+                govContribution = remainingGovAllowance;
+            }
+            
+            // Parent pays the remainder
+            const userPays = total - govContribution;
+            
+            // Update UI with locale formatting for thousands separators
+            document.getElementById('userPays').innerText = new Intl.NumberFormat('en-GB', { style: 'currency', currency: 'GBP' }).format(userPays);
+            document.getElementById('govPays').innerText = new Intl.NumberFormat('en-GB', { style: 'currency', currency: 'GBP' }).format(govContribution);
+        }
+
+        // Formats input values to exactly 2 decimal places
+        function formatToDecimals(event) {
+            const input = event.target;
+            const value = parseFloat(input.value);
+            
+            if (!isNaN(value)) {
+                input.value = value.toFixed(2);
+            }
+            // Trigger calculation after formatting just in case
+            calculate();
+        }
+
+        // Real-time calculation as you type
+        totalInput.addEventListener('input', calculate);
+        contributedInput.addEventListener('input', calculate);
+        disabledToggle.addEventListener('change', calculate);
+
+        // Format to decimals when the user clicks out of the input box
+        totalInput.addEventListener('blur', formatToDecimals);
+        contributedInput.addEventListener('blur', formatToDecimals);
+    </script>
+</body>
+</html>
