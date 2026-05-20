@@ -47,10 +47,10 @@
 <body class="bg-gradient-to-br from-slate-50 to-slate-200 h-screen overflow-hidden flex items-center justify-center p-4 antialiased text-slate-800">
 
     <!-- max-h-full and overflow-y-auto ensure it only scrolls inside the card on very small mobile screens, but stays fixed on desktop -->
-    <main class="bg-white rounded-[2rem] shadow-[0_20px_50px_-12px_rgba(0,0,0,0.1)] max-w-lg w-full p-6 sm:p-8 border border-slate-100 max-h-full overflow-y-auto flex flex-col">
+    <main class="bg-white rounded-[2rem] shadow-[0_20px_50px_-12px_rgba(0,0,0,0.1)] max-w-lg w-full p-5 sm:p-7 border border-slate-100 max-h-full overflow-y-auto flex flex-col">
         
-        <header class="mb-5 flex-shrink-0">
-            <h1 class="text-2xl sm:text-3xl font-extrabold tracking-tight text-slate-900 mb-2">
+        <header class="mb-4 flex-shrink-0">
+            <h1 class="text-2xl sm:text-3xl font-extrabold tracking-tight text-slate-900 mb-1.5">
                 Tax-Free Childcare Calculator
             </h1>
             <p class="text-slate-500 leading-relaxed text-sm">
@@ -63,7 +63,7 @@
             
             <!-- Total amount payable -->
             <div class="group">
-                <label for="total" class="block text-sm font-semibold text-slate-700 mb-1.5">
+                <label for="total" class="block text-sm font-semibold text-slate-700 mb-1">
                     Total bill from Childcare Provider
                 </label>
                 <div class="relative transition-shadow duration-300 rounded-xl group-focus-within:ring-4 group-focus-within:ring-indigo-100">
@@ -71,51 +71,60 @@
                         <span class="text-slate-400 font-semibold text-lg">£</span>
                     </div>
                     <input type="number" id="total" min="0" step="0.01" placeholder="0.00" 
-                           class="pl-10 w-full bg-slate-50 border border-slate-200 text-slate-900 font-medium rounded-xl py-2.5 px-4 focus:outline-none focus:border-indigo-500 focus:bg-white transition-all text-lg"
+                           class="pl-10 w-full bg-slate-50 border border-slate-200 text-slate-900 font-medium rounded-xl py-2 px-4 focus:outline-none focus:border-indigo-500 focus:bg-white transition-all text-lg"
                            aria-label="Total amount payable to Childcare Provider">
                 </div>
             </div>
 
-            <!-- Amount already contributed -->
+            <!-- Allowance Input with Toggle -->
             <div class="group">
-                <label for="contributed" class="block text-sm font-semibold text-slate-700 mb-1.5">
-                    Gov contribution used this period <span class="font-normal text-slate-400">(Current 3 months)</span>
-                </label>
+                <div class="flex justify-between items-end mb-1.5">
+                    <label id="allowanceLabel" for="allowanceInput" class="block text-sm font-semibold text-slate-700">
+                        Allowance remaining <span class="font-normal text-slate-400">(This period)</span>
+                    </label>
+                </div>
+
+                <!-- Segmented Toggle -->
+                <div class="flex bg-slate-100 p-1 rounded-lg mb-2 border border-slate-200">
+                    <button type="button" id="btnRemaining" onclick="setMode('remaining')" class="flex-1 text-xs py-1.5 rounded-md bg-white shadow-sm font-semibold text-slate-800 transition-all">Remaining</button>
+                    <button type="button" id="btnUsed" onclick="setMode('used')" class="flex-1 text-xs py-1.5 rounded-md text-slate-500 font-medium hover:text-slate-800 transition-all">Amount Used</button>
+                </div>
+
                 <div class="relative transition-shadow duration-300 rounded-xl group-focus-within:ring-4 group-focus-within:ring-indigo-100">
                     <div class="absolute inset-y-0 left-0 pl-4 flex items-center pointer-events-none">
                         <span class="text-slate-400 font-semibold text-lg">£</span>
                     </div>
-                    <input type="number" id="contributed" min="0" step="0.01" placeholder="0.00" 
-                           class="pl-10 w-full bg-slate-50 border border-slate-200 text-slate-900 font-medium rounded-xl py-2.5 px-4 focus:outline-none focus:border-indigo-500 focus:bg-white transition-all text-lg"
-                           aria-label="Amount already contributed by the Government">
+                    <input type="number" id="allowanceInput" min="0" step="0.01" placeholder="0.00" 
+                           class="pl-10 w-full bg-slate-50 border border-slate-200 text-slate-900 font-medium rounded-xl py-2 px-4 focus:outline-none focus:border-indigo-500 focus:bg-white transition-all text-lg"
+                           aria-label="Government allowance status">
                 </div>
             </div>
 
             <!-- Disabled Child Toggle -->
-            <div class="flex items-start p-3 bg-slate-50 rounded-xl border border-slate-100 hover:bg-slate-100 transition-colors cursor-pointer" onclick="document.getElementById('disabled').click()">
+            <div class="flex items-start p-2.5 bg-slate-50 rounded-xl border border-slate-100 hover:bg-slate-100 transition-colors cursor-pointer" onclick="document.getElementById('disabled').click()">
                 <div class="flex items-center h-5 mt-0.5">
                     <input id="disabled" type="checkbox" class="h-4 w-4 text-indigo-600 focus:ring-indigo-500 border-slate-300 rounded cursor-pointer accent-indigo-600">
                 </div>
                 <div class="ml-3 text-sm flex-1">
                     <label for="disabled" class="font-semibold text-slate-800 cursor-pointer pointer-events-none">Child is disabled</label>
-                    <p class="text-slate-500 mt-0.5 text-xs pointer-events-none">Increases max government top-up to £1,000 per 3 months.</p>
+                    <p class="text-slate-500 mt-0.5 text-xs pointer-events-none">Increases max gov top-up to £1,000 per 3 months.</p>
                 </div>
             </div>
         </form>
 
         <!-- Output Results (Premium High-Contrast Card) -->
-        <section aria-live="polite" class="mt-6 bg-gradient-to-br from-indigo-900 to-slate-800 rounded-2xl p-5 shadow-inner border border-indigo-700 text-white relative overflow-hidden flex-shrink-0">
+        <section aria-live="polite" class="mt-5 bg-gradient-to-br from-indigo-900 to-slate-800 rounded-2xl p-5 shadow-inner border border-indigo-700 text-white relative overflow-hidden flex-shrink-0">
             
             <!-- Decorative background element -->
             <div class="absolute top-0 right-0 -mr-16 -mt-16 w-40 h-40 rounded-full bg-indigo-500 opacity-20 blur-3xl"></div>
 
             <div class="relative z-10">
-                <div class="mb-4">
+                <div class="mb-3">
                     <h2 class="text-[11px] font-bold text-indigo-300 uppercase tracking-widest mb-1">You need to pay</h2>
                     <output id="userPays" class="block text-3xl sm:text-4xl font-extrabold tracking-tight">£0.00</output>
                 </div>
                 
-                <div class="pt-4 border-t border-indigo-700/50">
+                <div class="pt-3 border-t border-indigo-700/50">
                     <h2 class="text-[11px] font-bold text-indigo-300 uppercase tracking-widest mb-1">Government will add</h2>
                     <output id="govPays" class="block text-xl sm:text-2xl font-bold text-indigo-100">£0.00</output>
                 </div>
@@ -123,7 +132,7 @@
         </section>
 
         <!-- GOV.UK Sign In Link -->
-        <div class="mt-5 text-center flex-shrink-0">
+        <div class="mt-4 text-center flex-shrink-0">
             <a href="https://www.gov.uk/sign-in-childcare-account" target="_blank" rel="noopener noreferrer" 
                class="inline-flex items-center justify-center gap-2 text-sm font-semibold text-indigo-600 hover:text-indigo-800 hover:bg-indigo-50 transition-colors py-2 px-4 rounded-lg">
                 Sign in to your Childcare Account
@@ -138,18 +147,54 @@
     <!-- Core Logic Script -->
     <script>
         const totalInput = document.getElementById('total');
-        const contributedInput = document.getElementById('contributed');
+        const allowanceInput = document.getElementById('allowanceInput');
         const disabledToggle = document.getElementById('disabled');
+        const allowanceLabel = document.getElementById('allowanceLabel');
+        const btnRemaining = document.getElementById('btnRemaining');
+        const btnUsed = document.getElementById('btnUsed');
+        
+        let isRemainingMode = true; // Default state
+
+        // Handles switching between Remaining and Used modes
+        function setMode(mode) {
+            isRemainingMode = mode === 'remaining';
+            
+            if (isRemainingMode) {
+                // Style Remaining active
+                btnRemaining.className = "flex-1 text-xs py-1.5 rounded-md bg-white shadow-sm font-semibold text-slate-800 transition-all";
+                // Style Used inactive
+                btnUsed.className = "flex-1 text-xs py-1.5 rounded-md text-slate-500 font-medium hover:text-slate-800 transition-all";
+                // Update Label
+                allowanceLabel.innerHTML = 'Allowance remaining <span class="font-normal text-slate-400">(This period)</span>';
+            } else {
+                // Style Used active
+                btnUsed.className = "flex-1 text-xs py-1.5 rounded-md bg-white shadow-sm font-semibold text-slate-800 transition-all";
+                // Style Remaining inactive
+                btnRemaining.className = "flex-1 text-xs py-1.5 rounded-md text-slate-500 font-medium hover:text-slate-800 transition-all";
+                // Update Label
+                allowanceLabel.innerHTML = 'Gov contribution used <span class="font-normal text-slate-400">(This period)</span>';
+            }
+            
+            calculate();
+        }
 
         function calculate() {
             // Retrieve and parse inputs
             const total = Math.max(0, parseFloat(totalInput.value) || 0);
-            const alreadyContributed = Math.max(0, parseFloat(contributedInput.value) || 0);
+            const allowanceInputValue = Math.max(0, parseFloat(allowanceInput.value) || 0);
             const isDisabled = disabledToggle.checked;
             
             // Maximum government contribution (£500 standard, £1000 if disabled)
             const maxGovAllowance = isDisabled ? 1000 : 500;
-            const remainingGovAllowance = Math.max(0, maxGovAllowance - alreadyContributed);
+            
+            let remainingGovAllowance = 0;
+
+            // Determine actual remaining allowance based on the active mode
+            if (isRemainingMode) {
+                remainingGovAllowance = Math.min(allowanceInputValue, maxGovAllowance);
+            } else {
+                remainingGovAllowance = Math.max(0, maxGovAllowance - allowanceInputValue);
+            }
             
             // Government covers 20% of the total childcare bill
             let govContribution = total * 0.20;
@@ -175,18 +220,17 @@
             if (!isNaN(value)) {
                 input.value = value.toFixed(2);
             }
-            // Trigger calculation after formatting just in case
             calculate();
         }
 
         // Real-time calculation as you type
         totalInput.addEventListener('input', calculate);
-        contributedInput.addEventListener('input', calculate);
+        allowanceInput.addEventListener('input', calculate);
         disabledToggle.addEventListener('change', calculate);
 
         // Format to decimals when the user clicks out of the input box
         totalInput.addEventListener('blur', formatToDecimals);
-        contributedInput.addEventListener('blur', formatToDecimals);
+        allowanceInput.addEventListener('blur', formatToDecimals);
     </script>
 </body>
 </html>
